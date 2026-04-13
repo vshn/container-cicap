@@ -23,7 +23,7 @@ RUN curl -L -o "squidclamav.tar.gz" "https://github.com/darold/squidclamav/archi
     ./configure --prefix=/usr/local/squidclamav --with-c-icap=/usr/local/c-icap && \
     make && make install
 
-FROM ubuntu:24.04@sha256:cc925e589b7543b910fea57a240468940003fbfc0515245a495dd0ad8fe7cef1 as server
+FROM ubuntu:24.04@sha256:cc925e589b7543b910fea57a240468940003fbfc0515245a495dd0ad8fe7cef1 AS server
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y libarchive13 libatomic1 netcat-openbsd gettext && \
