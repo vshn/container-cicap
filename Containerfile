@@ -1,16 +1,19 @@
 FROM ubuntu:24.04@sha256:cc925e589b7543b910fea57a240468940003fbfc0515245a495dd0ad8fe7cef1 AS builder
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y curl build-essential clamav clamav-daemon libarchive-dev libatomic1
+    DEBIAN_FRONTEND=noninteractive apt-get install -y autoconf curl build-essential clamav clamav-daemon libarchive-dev libatomic1 libtool
 
 WORKDIR /tmp
 
 ENV C_ICAP_VERSION=0.6.4
 
-RUN curl -L -o "c-icap.tar.gz" "https://sourceforge.net/projects/c-icap/files/c-icap/0.6.x/c_icap-${C_ICAP_VERSION}.tar.gz" && \
+RUN curl -L -o "c-icap.tar.gz" "https://github.com/c-icap/c-icap-server/archive/refs/tags/C_ICAP_${C_ICAP_VERSION}.tar.gz" && \
     mkdir c-icap && \
     tar -xzf c-icap.tar.gz --strip-components=1 -C c-icap && \
     cd c-icap && \
+    chmod +x RECONF && \
+    ./RECONF && \
+    automake && \
     ./configure --prefix=/usr/local/c-icap --enable-large-files && \
     make && make install
 
