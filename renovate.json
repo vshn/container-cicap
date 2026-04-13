@@ -1,0 +1,31 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "reviewers": ["team:nunki"],
+  "customManagers": [
+    "regexManagers": [
+    {
+      "fileMatch": ["(^|/)Containerfile$"],
+      "matchStrings": [
+        "SQUIDCLAMAV_VERSION=(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)"
+      ],
+      "depNameTemplate": "darold/squidclamav",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "fileMatch": ["(^|/)Containerfile$"],
+      "matchStrings": [
+        "C_ICAP_VERSION=(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)"
+      ],
+      "depNameTemplate": "c-icap/c-icap-server",
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^C_ICAP_(?<version>.*)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch", "digest"],
+      "automerge": true
+    }
+  ]
+}
