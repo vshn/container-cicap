@@ -36,11 +36,9 @@ RUN apt-get update && \
 COPY --from=builder /usr/local/c-icap /usr/local/c-icap
 COPY --from=builder /usr/local/squidclamav /usr/local/squidclamav
  
-# Add c-icap binaries and libs to PATH and LD_LIBRARY_PATH
 ENV PATH="/usr/local/c-icap/bin:${PATH}"
 ENV LD_LIBRARY_PATH="/usr/local/c-icap/lib:${LD_LIBRARY_PATH}"
 
-# Copy config
 COPY config/c-icap.conf /usr/local/c-icap/etc/c-icap.conf
 COPY config/squidclamav.conf /usr/local/c-icap/etc/squidclamav.conf.template
 
