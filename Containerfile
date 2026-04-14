@@ -35,9 +35,9 @@ RUN apt-get update && \
 
 COPY --from=builder /usr/local/c-icap /usr/local/c-icap
 COPY --from=builder /usr/local/squidclamav /usr/local/squidclamav
- 
+
+RUN echo "/usr/local/c-icap/lib" > /etc/ld.so.conf.d/c-icap.conf && ldconfig
 ENV PATH="/usr/local/c-icap/bin:${PATH}"
-ENV LD_LIBRARY_PATH="/usr/local/c-icap/lib:${LD_LIBRARY_PATH}"
 
 COPY config/c-icap.conf /usr/local/c-icap/etc/c-icap.conf
 COPY config/squidclamav.conf /usr/local/c-icap/etc/squidclamav.conf.template
