@@ -3,9 +3,9 @@
   "extends": ["config:recommended"],
   "reviewers": ["team:nunki"],
   "customManagers": [
-    "regexManagers": [
     {
-      "fileMatch": ["(^|/)Containerfile$"],
+      "customType": "regex",
+      "managerFilePatterns": ["(^|/)Containerfile$"],
       "matchStrings": [
         "SQUIDCLAMAV_VERSION=(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)"
       ],
@@ -13,7 +13,8 @@
       "datasourceTemplate": "github-tags"
     },
     {
-      "fileMatch": ["(^|/)Containerfile$"],
+      "customType": "regex",
+      "managerFilePatterns": ["(^|/)Containerfile$"],
       "matchStrings": [
         "C_ICAP_VERSION=(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)"
       ],
