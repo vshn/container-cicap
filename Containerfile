@@ -4,7 +4,7 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y autoconf curl build-essential clamav clamav-daemon libarchive-dev libatomic1 libtool
 
 WORKDIR /tmp
-
+# renovate: datasource=github-tags depName=c-icap/c-icap-server
 ENV C_ICAP_VERSION=0.6.4
 
 RUN curl -L -o "c-icap.tar.gz" "https://github.com/c-icap/c-icap-server/archive/refs/tags/C_ICAP_${C_ICAP_VERSION}.tar.gz" && \
@@ -17,6 +17,7 @@ RUN curl -L -o "c-icap.tar.gz" "https://github.com/c-icap/c-icap-server/archive/
     ./configure --prefix=/usr/local/c-icap --enable-large-files && \
     make && make install
 
+# renovate: datasource=github-tags depName=darold/squidclamav
 ENV SQUIDCLAMAV_VERSION=7.4
 
 RUN curl -L -o "squidclamav.tar.gz" "https://github.com/darold/squidclamav/archive/refs/tags/v${SQUIDCLAMAV_VERSION}.tar.gz" && \

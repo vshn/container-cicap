@@ -6,28 +6,24 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["(^|/)Containerfile$"],
+      "managerFilePatterns": ["/.*Containerfile/"],
       "matchStrings": [
-        "SQUIDCLAMAV_VERSION=(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)"
-      ],
-      "depNameTemplate": "darold/squidclamav",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": ["(^|/)Containerfile$"],
-      "matchStrings": [
-        "C_ICAP_VERSION=(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)"
-      ],
-      "depNameTemplate": "c-icap/c-icap-server",
-      "datasourceTemplate": "github-tags",
-      "extractVersionTemplate": "^C_ICAP_(?<version>.*)$"
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)?\\s.*ENV .*_VERSION=\"?(?<currentValue>.*)\"?\\s"
+      ]
     }
   ],
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "digest"],
       "automerge": true
+    },
+    {
+      "matchDatasources": ["github-tags"],
+      "extractVersion": "^v?(?<version>.*)$"
+    },
+    {
+      "matchDepNames": ["c-icap/c-icap-server"],
+      "extractVersion": "^C_ICAP_?(?<version>.*)$"
     }
   ]
 }
