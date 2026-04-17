@@ -1,10 +1,6 @@
 name: Build & Push Container Image
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - "v*"
+  push: {}
   pull_request: {}
 
 env:
