@@ -2,6 +2,7 @@ name: Build & Push Container Image
 on:
   push: {}
   pull_request: {}
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
