@@ -36,7 +36,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=ref,event=pr
-            type=raw,value={{date 'YYYYMMDD-HHmmss'}},enable={{is_default_branch}}
+            type=raw,value={{date 'YYYYMMDD_HHmmss'}},enable={{is_default_branch}}
 
       - name: Build & Push container image
         uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294
