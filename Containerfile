@@ -40,7 +40,7 @@ COPY --from=builder /usr/local/squidclamav /usr/local/squidclamav
 RUN echo "/usr/local/c-icap/lib" > /etc/ld.so.conf.d/c-icap.conf && ldconfig
 ENV PATH="/usr/local/c-icap/bin:${PATH}"
 
-COPY config/c-icap.conf /usr/local/c-icap/etc/c-icap.conf
+COPY config/c-icap.conf /usr/local/c-icap/etc/c-icap.conf.template
 COPY config/squidclamav.conf /usr/local/c-icap/etc/squidclamav.conf.template
 
 RUN mkdir -p /run/c-icap && \
@@ -53,6 +53,8 @@ ENV CLAMD_PORT=3310
 ENV CLAMD_TIMEOUT=1
 ENV CLAMD_ENABLE_LIBARCHIVE=0
 ENV CLAMD_BANMAXSIZE=2M
+ENV SQUIDCLAMAV_ADDITIONAL_CONFIG=""
+ENV C_ICAP_ADDITIONA_CONFIG=""
 
 COPY --chmod=0755 entrypoint.sh /entrypoint.sh
 
