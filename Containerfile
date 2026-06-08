@@ -5,7 +5,7 @@ RUN apt-get update && \
 
 WORKDIR /tmp
 # renovate: datasource=github-tags depName=c-icap/c-icap-server
-ENV C_ICAP_VERSION=0.6.4
+ENV C_ICAP_VERSION=0.6.5
 
 RUN curl -L -o "c-icap.tar.gz" "https://github.com/c-icap/c-icap-server/archive/refs/tags/C_ICAP_${C_ICAP_VERSION}.tar.gz" && \
     mkdir c-icap && \
