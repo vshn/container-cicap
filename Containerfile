@@ -18,7 +18,7 @@ RUN curl -L -o "c-icap.tar.gz" "https://github.com/c-icap/c-icap-server/archive/
     make && make install
 
 # renovate: datasource=github-tags depName=darold/squidclamav
-ENV SQUIDCLAMAV_VERSION=7.4
+ENV SQUIDCLAMAV_VERSION=7.5
 
 RUN curl -L -o "squidclamav.tar.gz" "https://github.com/darold/squidclamav/archive/refs/tags/v${SQUIDCLAMAV_VERSION}.tar.gz" && \
     mkdir squidclamav && \
