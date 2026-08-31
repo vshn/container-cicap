@@ -1,7 +1,7 @@
 FROM ubuntu:26.04@sha256:2260313b31c8c011cd2eebe728008efac1b3982be73eb71348ea2648d2c0e09b AS builder
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y autoconf curl build-essential clamav clamav-daemon libarchive-dev libatomic1 libtool
+    DEBIAN_FRONTEND=noninteractive apt-get install -y autoconf curl build-essential clamav clamav-daemon libarchive-dev libatomic1 libtool patch
 
 WORKDIR /tmp
 # renovate: datasource=github-tags depName=c-icap/c-icap-server
@@ -20,10 +20,13 @@ RUN curl -L -o "c-icap.tar.gz" "https://github.com/c-icap/c-icap-server/archive/
 # renovate: datasource=github-tags depName=darold/squidclamav
 ENV SQUIDCLAMAV_VERSION=7.5
 
+COPY poc.patch /tmp/poc.patch
+
 RUN curl -L -o "squidclamav.tar.gz" "https://github.com/darold/squidclamav/archive/refs/tags/v${SQUIDCLAMAV_VERSION}.tar.gz" && \
     mkdir squidclamav && \
     tar -xzf squidclamav.tar.gz  --strip-components=1 -C squidclamav && \
     cd squidclamav && \
+    patch -p1 < /tmp/poc.patch && \
     ./configure --prefix=/usr/local/squidclamav --with-c-icap=/usr/local/c-icap && \
     make && make install
 

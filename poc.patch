@@ -1,0 +1,25 @@
+diff --git a/src/squidclamav.c b/src/squidclamav.c
+index 75e968f..1428dd1 100644
+--- a/src/squidclamav.c
++++ b/src/squidclamav.c
+@@ -979,7 +979,11 @@ static int build_mime_email(int fd, const char *content_type, char **out, size_t
+                     const char *eol = mem_find(h, hl, "\n", 1);
+                     size_t linelen = eol ? (size_t)(eol - h + 1) : hl;
+                     size_t cmplen = eol ? (size_t)(eol - h) : hl;
+-                    if (!(cmplen >= 25 && strncasecmp(h, "Content-Transfer-Encoding", 25) == 0)) {
++                    /* Drop Content-Disposition as well: libclamav only understands
++                     * the attachment/inline values and silently skips parts
++                     * declared as form-data (issue #58). */
++                    if (!((cmplen >= 25 && strncasecmp(h, "Content-Transfer-Encoding", 25) == 0) ||
++                          (cmplen >= 19 && strncasecmp(h, "Content-Disposition", 19) == 0))) {
+                         if (gb_append(&gb, h, linelen) < 0) goto fail;
+                     }
+                     if (!eol)
+@@ -992,6 +996,7 @@ static int build_mime_email(int fd, const char *content_type, char **out, size_t
+                     if (gb_puts(&gb, "\r\n") < 0) goto fail;
+                 }
+             }
++            if (gb_puts(&gb, "Content-Disposition: attachment\r\n") < 0) goto fail;
+             if (gb_puts(&gb, "Content-Transfer-Encoding: base64\r\n\r\n") < 0) goto fail;
+             if (gb_append_base64(&gb, (const unsigned char *) part_body, part_body_len) < 0) goto fail;
+         }
