@@ -1,4 +1,4 @@
-FROM ubuntu:26.04@sha256:c098726dd9b9733f3e885f8de0ef375206a311b0a317eadc40d347b1115fb944 AS builder
+FROM ubuntu:26.04@sha256:19fcd1bf268f02b60aca3bd30bd8a6d9a11759a430e32921833e65f16d87348a AS builder
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y autoconf curl build-essential clamav clamav-daemon libarchive-dev libatomic1 libtool
@@ -27,7 +27,7 @@ RUN curl -L -o "squidclamav.tar.gz" "https://github.com/darold/squidclamav/archi
     ./configure --prefix=/usr/local/squidclamav --with-c-icap=/usr/local/c-icap && \
     make && make install
 
-FROM ubuntu:26.04@sha256:c098726dd9b9733f3e885f8de0ef375206a311b0a317eadc40d347b1115fb944 AS server
+FROM ubuntu:26.04@sha256:19fcd1bf268f02b60aca3bd30bd8a6d9a11759a430e32921833e65f16d87348a AS server
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y libarchive13 libatomic1 netcat-openbsd gettext && \
